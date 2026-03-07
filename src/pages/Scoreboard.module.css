@@ -26,21 +26,28 @@
 }
 
 .tournament-board {
-    padding: 20px;
+    padding: 2.5rem 2rem;
     background-color: var(--color-wood-dark);
     border: 4px solid #1a1a1a;
-    border-radius: 8px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(0, 0, 0, 0.9);
+    border-radius: 8px 12px 12px 8px;
+    /* simulating spine on left */
+    box-shadow:
+        8px 8px 0 #2a1f18,
+        8px 8px 0 2px #1a1a1a,
+        /* Pages effect */
+        15px 15px 30px rgba(0, 0, 0, 0.8),
+        inset -5px 0 15px rgba(0, 0, 0, 0.5),
+        inset 15px 0 30px rgba(0, 0, 0, 0.9);
     position: relative;
 }
 
 .tournament-board::after {
     content: "";
     position: absolute;
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
+    top: 15px;
+    left: 20px;
+    right: 15px;
+    bottom: 15px;
     border: 2px solid var(--color-accent-gold);
     pointer-events: none;
 }
@@ -70,92 +77,108 @@
 .game-stats-column {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    padding: 1.5rem;
-    background-color: rgba(0, 0, 0, 0.03);
-    border: 2px dashed rgba(139, 90, 43, 0.4);
-    border-radius: 6px;
+    gap: 0;
+    padding: 1rem 1.5rem 1.5rem 1.5rem;
+    background-color: rgba(255, 248, 235, 0.9);
+    border: 2px solid rgba(139, 90, 43, 0.5);
+    border-radius: 4px;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .game-stats-title {
     text-align: center;
     font-family: var(--font-heading);
     font-size: 1.8rem;
-    color: var(--color-wood-panel);
-    margin-bottom: 1rem;
+    color: #1a1a1a;
+    margin-bottom: 0.2rem;
     text-transform: uppercase;
     letter-spacing: 2px;
-    border-bottom: 1px solid rgba(139, 90, 43, 0.2);
+    border-bottom: 2px solid rgba(139, 90, 43, 0.5);
     padding-bottom: 0.5rem;
 }
 
 .stat-card {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
-    background-color: rgba(92, 59, 33, 0.05);
-    border: 1px solid rgba(139, 90, 43, 0.2);
-    border-radius: 4px;
-    padding: 1.2rem;
+    justify-content: space-between;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0 0.5rem;
+    height: 50px;
 }
 
 .stat-label {
-    font-family: var(--font-heading);
-    font-size: 1.1rem;
-    color: var(--color-text-dark);
+    font-family: var(--font-body);
+    font-size: 1.15rem;
+    color: #1a1a1a;
     font-weight: 700;
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-    letter-spacing: 1px;
-    text-align: center;
+    text-transform: capitalize;
+    margin-bottom: 0;
+    letter-spacing: 0px;
+    text-align: left;
 }
 
 .stat-value {
-    font-family: var(--font-body);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #8c2a2a;
+    /* Red/dried ink */
+    text-shadow: none;
+}
+
+/* Global Stats Card Override */
+.global-stats .stat-card {
+    width: 80%;
+    flex-direction: row;
+    border: 2px solid rgba(139, 90, 43, 0.6);
+    background-color: rgba(255, 248, 235, 0.9);
+    padding: 1.5rem 2.5rem;
+    border-radius: 4px;
+    height: auto;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05), 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.global-stats .stat-label {
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    font-family: var(--font-heading);
+}
+
+.global-stats .stat-value {
     font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--color-wood-panel);
-    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+    color: #1a1a1a;
+    /* Black ink for global */
 }
 
 /* --- Themes for each column --- */
 .theme-chess {
-    border-color: rgba(255, 215, 0, 0.3);
-    background-color: rgba(255, 215, 0, 0.02);
-}
-
-.theme-chess .game-stats-title {
-    color: #444;
+    border-color: rgba(139, 90, 43, 0.6);
 }
 
 .theme-chess .stat-value {
-    color: #1a1a1a;
+    color: #8c2a2a;
+    /* Red ink */
 }
 
 .theme-checkers {
-    border-color: rgba(139, 90, 43, 0.3);
-}
-
-.theme-checkers .game-stats-title {
-    color: #633e21;
+    border-color: rgba(139, 90, 43, 0.6);
 }
 
 .theme-checkers .stat-value {
-    color: #8b5a2b;
+    color: #1a4d2e;
+    /* Green ink */
 }
 
 .theme-reversi {
-    border-color: rgba(27, 99, 59, 0.3);
-    background-color: rgba(27, 99, 59, 0.02);
-}
-
-.theme-reversi .game-stats-title {
-    color: #1b633b;
+    border-color: rgba(139, 90, 43, 0.6);
 }
 
 .theme-reversi .stat-value {
-    color: #278f55;
+    color: #1f365c;
+    /* Blue ink */
 }
 
 .scoreboard-actions {
