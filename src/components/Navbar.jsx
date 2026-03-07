@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { Hexagon } from 'lucide-react';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -9,7 +10,7 @@ const Navbar = () => {
         <nav className="retro-navbar">
             <div className="navbar-container">
                 <Link to="/" className="navbar-brand">
-                    <div className="brand-icon">♛</div>
+                    <div className="brand-icon"><Hexagon size={28} color="var(--color-accent-gold)" /></div>
                     <h1>BoardVerse</h1>
                 </Link>
                 <div className="navbar-links">

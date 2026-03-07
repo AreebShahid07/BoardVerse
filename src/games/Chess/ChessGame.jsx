@@ -5,6 +5,7 @@ import { useChessGame } from './useChessGame';
 import GameBoardLayout from '../../components/GameBoardLayout';
 import RetroPanel from '../../components/RetroPanel';
 import Button from '../../components/Button';
+import { Bot, User, Volume2, VolumeX, RotateCcw, Undo2 } from 'lucide-react';
 import styles from './ChessGame.module.css';
 
 const ChessGame = () => {
@@ -121,14 +122,14 @@ const ChessGame = () => {
                         onClick={() => setGameMode('bot')}
                         disabled={moveHistory.length > 0}
                     >
-                        <span className={styles.btnIcon}>⚙️</span> Automaton
+                        <span className={styles.btnIcon}><Bot size={18} /></span> Automaton
                     </Button>
                     <Button
                         variant={gameMode === 'local' ? 'primary' : 'secondary'}
                         onClick={() => setGameMode('local')}
                         disabled={moveHistory.length > 0}
                     >
-                        <span className={styles.btnIcon}>👤</span> Local Peer
+                        <span className={styles.btnIcon}><User size={18} /></span> Local Peer
                     </Button>
                 </div>
             </div>
@@ -149,13 +150,15 @@ const ChessGame = () => {
 
             <div className={styles.controlActions}>
                 <Button onClick={() => setSoundEnabled(!soundEnabled)} variant="secondary" fullWidth>
-                    <span className={styles.btnIcon}>{soundEnabled ? '🔊' : '🔇'}</span> Toggle Sound
+                    <span className={styles.btnIcon}>
+                        {soundEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
+                    </span> Toggle Sound
                 </Button>
                 <Button onClick={undoMove} variant="secondary" fullWidth disabled={moveHistory.length === 0}>
-                    <span className={styles.btnIcon}>↶</span> Retract Move
+                    <span className={styles.btnIcon}><Undo2 size={18} /></span> Retract Move
                 </Button>
                 <Button onClick={restartGame} variant="primary" fullWidth>
-                    <span className={styles.btnIcon}>↻</span> New Match
+                    <span className={styles.btnIcon}><RotateCcw size={18} /></span> New Match
                 </Button>
             </div>
         </RetroPanel>

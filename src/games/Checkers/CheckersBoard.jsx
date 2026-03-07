@@ -1,5 +1,6 @@
 import React from 'react';
 import { P1, P2, P1_KING, P2_KING } from './engine';
+import { Crown } from 'lucide-react';
 import './CheckersBoard.css';
 
 const CheckersBoard = ({ board, onSquareClick, selectedSquare, turn, boardWidth }) => {
@@ -24,7 +25,7 @@ const CheckersBoard = ({ board, onSquareClick, selectedSquare, turn, boardWidth 
 
             pieceElement = (
                 <div className={pieceClass}>
-                    {isKing && <span className="king-crown">♛</span>}
+                    {isKing && <span className="king-crown"><Crown size={16} color="#ffd700" /></span>}
                 </div>
             );
         }
