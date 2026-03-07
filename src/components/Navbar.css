@@ -73,3 +73,32 @@
     color: var(--color-accent-gold);
     border-bottom: 2px solid var(--color-accent-gold);
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    .navbar-container {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 0.8rem 1rem;
+    }
+
+    .navbar-brand h1 {
+        font-size: 1.4rem;
+        letter-spacing: 2px;
+    }
+
+    .brand-icon {
+        font-size: 1.8rem;
+    }
+
+    .navbar-links {
+        gap: 0.8rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .nav-link {
+        font-size: 0.95rem;
+        padding: 0.3rem 0.5rem;
+    }
+}

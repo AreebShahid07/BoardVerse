@@ -65,3 +65,22 @@
         font-size: 3rem;
     }
 }
+
+@media (max-width: 480px) {
+    .home-title {
+        font-size: 2rem;
+        letter-spacing: 2px;
+    }
+
+    .home-subtitle {
+        font-size: 1.2rem;
+    }
+
+    .quote-text {
+        font-size: 1.1rem;
+    }
+
+    .games-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
-import ChessGame from './pages/ChessGame';
+import ChessGame from './games/Chess/ChessGame';
 import CheckersGame from './games/Checkers/CheckersGame';
 import ReversiGame from './games/Reversi/ReversiGame';
 import Scoreboard from './pages/Scoreboard';

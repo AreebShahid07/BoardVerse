@@ -110,3 +110,10 @@ a {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-accent-gold);
 }
+
+/* Mobile Responsiveness adjustments */
+@media (max-width: 600px) {
+  .main-content {
+    padding: 1rem;
+  }
+}

@@ -169,3 +169,26 @@
         grid-template-columns: 1fr;
     }
 }
+
+@media (max-width: 600px) {
+    .scoreboard-title {
+        font-size: 2rem;
+        letter-spacing: 1px;
+    }
+
+    .record-board-title {
+        font-size: 1.6rem;
+    }
+
+    .stat-value {
+        font-size: 2rem;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+    }
+
+    .game-stats-title {
+        font-size: 1.4rem;
+    }
+}

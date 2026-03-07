@@ -78,3 +78,22 @@
     width: 80%;
     margin: 0 auto;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    .padding-large {
+        padding: 1.5rem;
+    }
+
+    .padding-normal {
+        padding: 1rem;
+    }
+
+    .padding-small {
+        padding: 0.8rem;
+    }
+
+    .retro-panel-title {
+        font-size: 1.3rem;
+    }
+}

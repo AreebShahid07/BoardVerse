@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getStats, resetStats } from '../utils/storage';
 import RetroPanel from '../components/RetroPanel';
 import Button from '../components/Button';
-import './Scoreboard.css';
+import styles from './Scoreboard.module.css';
 
 const Scoreboard = () => {
     const [stats, setStats] = useState({
@@ -23,54 +23,53 @@ const Scoreboard = () => {
         }
     };
 
-    // Helper to render individual game columns
     const renderGameStats = (gameTitle, gameCode, themeClass) => {
         const gameStats = stats[gameCode] || { matches: 0, playerWins: 0, botWins: 0 };
         return (
-            <div className={`game-stats-column ${themeClass}`}>
-                <h3 className="game-stats-title">{gameTitle}</h3>
-                <div className="stat-card">
-                    <span className="stat-label">Matches</span>
-                    <span className="stat-value">{gameStats.matches || 0}</span>
+            <div className={`${styles['game-stats-column']} ${styles[themeClass]}`}>
+                <h3 className={styles['game-stats-title']}>{gameTitle}</h3>
+                <div className={styles['stat-card']}>
+                    <span className={styles['stat-label']}>Matches</span>
+                    <span className={styles['stat-value']}>{gameStats.matches || 0}</span>
                 </div>
-                <div className="stat-card">
-                    <span className="stat-label">Human Wins</span>
-                    <span className="stat-value">{gameStats.playerWins || 0}</span>
+                <div className={styles['stat-card']}>
+                    <span className={styles['stat-label']}>Human Wins</span>
+                    <span className={styles['stat-value']}>{gameStats.playerWins || 0}</span>
                 </div>
-                <div className="stat-card">
-                    <span className="stat-label">Automaton Wins</span>
-                    <span className="stat-value">{gameStats.botWins || 0}</span>
+                <div className={styles['stat-card']}>
+                    <span className={styles['stat-label']}>Automaton Wins</span>
+                    <span className={styles['stat-value']}>{gameStats.botWins || 0}</span>
                 </div>
             </div>
         );
     };
 
     return (
-        <div className="scoreboard-container fade-in">
-            <div className="scoreboard-header">
-                <h1 className="scoreboard-title">Tournament Records</h1>
-                <div className="retro-divider" style={{ width: '30%', marginTop: '1rem' }} />
+        <div className={`${styles['scoreboard-container']} fade-in`}>
+            <div className={styles['scoreboard-header']}>
+                <h1 className={styles['scoreboard-title']}>Tournament Records</h1>
+                <div className="retro-divider" style={{ width: '30%', marginTop: '1rem', marginLeft: 'auto', marginRight: 'auto' }} />
             </div>
 
-            <div className="scoreboard-content">
-                <div className="tournament-board">
-                    <RetroPanel woodStyle="parchment" padding="large" className="stats-panel">
-                        <h2 className="record-board-title">The Grand Ledger</h2>
+            <div className={styles['scoreboard-content']}>
+                <div className={styles['tournament-board']}>
+                    <RetroPanel woodStyle="parchment" padding="large" className={styles['stats-panel']}>
+                        <h2 className={styles['record-board-title']}>The Grand Ledger</h2>
 
-                        <div className="global-stats">
-                            <div className="stat-card">
-                                <span className="stat-label">Total Historical Matches</span>
-                                <span className="stat-value">{stats.totalGames}</span>
+                        <div className={styles['global-stats']}>
+                            <div className={styles['stat-card']}>
+                                <span className={styles['stat-label']}>Total Historical Matches</span>
+                                <span className={styles['stat-value']}>{stats.totalGames}</span>
                             </div>
                         </div>
 
-                        <div className="games-stats-grid">
+                        <div className={styles['games-stats-grid']}>
                             {renderGameStats('Chess', 'chess', 'theme-chess')}
                             {renderGameStats('Checkers', 'checkers', 'theme-checkers')}
                             {renderGameStats('Reversi', 'reversi', 'theme-reversi')}
                         </div>
 
-                        <div className="scoreboard-actions">
+                        <div className={styles['scoreboard-actions']}>
                             <Button variant="secondary" onClick={handleReset}>Clear Ledger</Button>
                         </div>
                     </RetroPanel>

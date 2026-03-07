@@ -1,24 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { Chessboard } from 'react-chessboard';
 import { useNavigate } from 'react-router-dom';
-import { P1, P2 } from './engine';
-import { useCheckersGame } from './useCheckersGame';
+import { useChessGame } from './useChessGame';
 import GameBoardLayout from '../../components/GameBoardLayout';
-import CheckersBoard from './CheckersBoard';
 import RetroPanel from '../../components/RetroPanel';
 import Button from '../../components/Button';
-import styles from './CheckersGame.module.css';
+import styles from './ChessGame.module.css';
 
-const CheckersGame = () => {
+const ChessGame = () => {
     const navigate = useNavigate();
     const [soundEnabled, setSoundEnabled] = useState(true);
-    const [boardWidth, setBoardWidth] = useState(550);
+    const [boardWidth, setBoardWidth] = useState(500);
 
     const {
-        engine, gameMode, setGameMode, botLevel, setBotLevel,
-        botIsThinking, gameOverMsg, moveHistory,
-        selectedSquare, validJumpsFromSelected,
-        handleSquareClick, restartGame
-    } = useCheckersGame(soundEnabled);
+        game, gameMode, setGameMode, botLevel, setBotLevel,
+        botIsThinking, gameOverMsg, moveHistory, moveFrom,
+        onDrop, onSquareClick, restartGame, undoMove
+    } = useChessGame(soundEnabled);
 
     // Responsive board
     useEffect(() => {
@@ -33,10 +31,37 @@ const CheckersGame = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    // Convert history array to pairs for the UI
+    // Turn History array into pairs for notation rendering
     const historyPairs = [];
     for (let i = 0; i < moveHistory.length; i += 2) {
         historyPairs.push([moveHistory[i], moveHistory[i + 1]]);
+    }
+
+    const customBoardStyle = {
+        borderRadius: '4px',
+        boxShadow: '0 10px 30px rgba(0,0,0,0.8)'
+    };
+    const customDarkSquareStyle = { backgroundColor: '#5c3b21' };
+    const customLightSquareStyle = { backgroundColor: '#d4b483' };
+
+    // Calculate possible moves for the selected piece
+    const possibleMoves = React.useMemo(() => {
+        if (!moveFrom) return [];
+        return game.moves({ square: moveFrom, verbose: true }).map(m => m.to);
+    }, [game.fen(), moveFrom]); // use fen() to trigger on game changes too
+
+    // Build customSquareStyles for highlighting
+    const currentSquareStyles = {};
+    if (moveFrom) {
+        currentSquareStyles[moveFrom] = { backgroundColor: 'rgba(255, 255, 0, 0.4)' };
+        possibleMoves.forEach(sq => {
+            currentSquareStyles[sq] = {
+                background: game.get(sq) && game.get(sq).color !== game.turn()
+                    ? 'radial-gradient(circle, rgba(0,0,0,.1) 85%, transparent 85%)'
+                    : 'radial-gradient(circle, rgba(0,0,0,.1) 25%, transparent 25%)',
+                borderRadius: '50%'
+            };
+        });
     }
 
     const leftPanel = (
@@ -62,22 +87,28 @@ const CheckersGame = () => {
             {botIsThinking ? (
                 <span className="turn-indicator bot-thinking">Automaton pondering...</span>
             ) : (
-                <span className={`turn-indicator ${engine.currentTurn === P1 ? 'active-w' : 'active-b'}`}>
-                    {engine.currentTurn === P1 ? 'Red to move' : 'Black to move'}
-                    {validJumpsFromSelected && ' (Jump Required)'}
+                <span className={`turn-indicator ${game.turn() === 'w' ? 'active-w' : 'active-b'}`}>
+                    {game.turn() === 'w' ? 'White to move' : 'Black to move'}
                 </span>
             )}
         </>
     );
 
     const centerBoard = (
-        <CheckersBoard
-            board={engine.board}
-            onSquareClick={handleSquareClick}
-            selectedSquare={selectedSquare}
-            turn={engine.currentTurn}
-            boardWidth={boardWidth}
-        />
+        <div className={styles.boardWrapperRetro}>
+            <Chessboard
+                id="BoardVerse"
+                position={game.fen()}
+                onPieceDrop={onDrop}
+                onSquareClick={onSquareClick}
+                boardWidth={boardWidth}
+                customBoardStyle={customBoardStyle}
+                customDarkSquareStyle={customDarkSquareStyle}
+                customLightSquareStyle={customLightSquareStyle}
+                customSquareStyles={currentSquareStyles}
+                animationDuration={300}
+            />
+        </div>
     );
 
     const rightPanel = (
@@ -120,6 +151,9 @@ const CheckersGame = () => {
                 <Button onClick={() => setSoundEnabled(!soundEnabled)} variant="secondary" fullWidth>
                     <span className={styles.btnIcon}>{soundEnabled ? '🔊' : '🔇'}</span> Toggle Sound
                 </Button>
+                <Button onClick={undoMove} variant="secondary" fullWidth disabled={moveHistory.length === 0}>
+                    <span className={styles.btnIcon}>↶</span> Retract Move
+                </Button>
                 <Button onClick={restartGame} variant="primary" fullWidth>
                     <span className={styles.btnIcon}>↻</span> New Match
                 </Button>
@@ -130,7 +164,7 @@ const CheckersGame = () => {
     const gameOverModalNode = gameOverMsg ? (
         <RetroPanel woodStyle="parchment" padding="large" className="game-over-modal slide-in">
             <div className="gold-frame-inner">
-                <h1 className="game-over-title">Match Concluded</h1>
+                <h1 className="game-over-title">Victory!</h1>
                 <div className="retro-divider" style={{ width: '60%', margin: '1rem auto' }} />
                 <h2 className="game-over-text">{gameOverMsg.split('\n').map((line, i) => <div key={i}>{line}</div>)}</h2>
 
@@ -153,4 +187,4 @@ const CheckersGame = () => {
     );
 };
 
-export default CheckersGame;
+export default ChessGame;
