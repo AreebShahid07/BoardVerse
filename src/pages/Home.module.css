@@ -1,40 +1,161 @@
 .home-container {
     display: flex;
     flex-direction: column;
-    gap: 3rem;
-    padding: 1rem 0 3rem;
+    gap: 4rem;
+    padding: 2rem 0 4rem;
+    position: relative;
 }
 
+/* Decorative corner flourishes */
+.home-container::before,
+.home-container::after {
+    content: "";
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    opacity: 0.15;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M0,0 Q50,10 100,0 Q90,50 100,100 Q50,90 0,100 Q10,50 0,0' fill='none' stroke='%23c9a66b' stroke-width='1'/%3E%3Cpath d='M20,20 Q50,30 80,20 Q70,50 80,80 Q50,70 20,80 Q30,50 20,20' fill='none' stroke='%23c9a66b' stroke-width='0.5'/%3E%3C/svg%3E");
+}
+
+.home-container::before {
+    top: 0;
+    left: 0;
+}
+
+.home-container::after {
+    bottom: 0;
+    right: 0;
+    transform: rotate(180deg);
+}
+
+/* Hero Header Section */
 .home-header {
     text-align: center;
     margin-bottom: 1rem;
+    padding: 2rem 1rem;
+    position: relative;
+}
+
+.home-logo {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    filter: drop-shadow(0 4px 12px rgba(201, 166, 107, 0.4));
+    animation: floatLogo 6s ease-in-out infinite;
+}
+
+@keyframes floatLogo {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
 }
 
 .home-title {
-    font-size: 4rem;
+    font-size: clamp(2.5rem, 8vw, 5rem);
     color: var(--color-accent-gold);
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
-    margin-bottom: 0.25rem;
-    letter-spacing: 4px;
+    text-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.9),
+        0 4px 16px rgba(0, 0, 0, 0.6),
+        0 0 60px rgba(201, 166, 107, 0.2);
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.08em;
     font-weight: 700;
+    line-height: 1.1;
+    position: relative;
+}
+
+/* Shimmer effect on title */
+.home-title::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        120deg,
+        transparent 20%,
+        rgba(255, 255, 255, 0.1) 40%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.1) 60%,
+        transparent 80%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
 }
 
 .home-subtitle {
-    font-size: 1.6rem;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
     font-style: italic;
     color: var(--color-text-light);
-    opacity: 0.9;
+    opacity: 0.85;
     font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
 }
 
+.home-tagline {
+    font-size: 1rem;
+    color: var(--color-accent-gold);
+    opacity: 0.6;
+    font-family: var(--font-body);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 1rem;
+}
+
+/* Decorative divider */
+.decorative-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1.5rem auto 0;
+    width: fit-content;
+}
+
+.divider-line {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-accent-gold), transparent);
+}
+
+.divider-ornament {
+    color: var(--color-accent-gold);
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+/* Games Grid */
 .games-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 2.5rem;
+    padding: 1rem;
 }
 
+/* Section Title */
+.section-title {
+    text-align: center;
+    margin-bottom: -1rem;
+}
+
+.section-heading {
+    font-size: 1.4rem;
+    color: var(--color-accent-gold);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+/* Footer Info */
 .home-footer-info {
-    margin-top: 4rem;
+    margin-top: 3rem;
     display: flex;
     justify-content: center;
 }
@@ -44,43 +165,102 @@
     text-align: center;
     /* Engraved plaque style */
     background-color: var(--color-wood-panel);
-    border: 4px double var(--color-accent-gold);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(0, 0, 0, 0.8);
-    padding: 2rem;
-    background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.4) 100%);
+    border: 3px double var(--color-accent-gold);
+    box-shadow: 
+        0 15px 40px rgba(0, 0, 0, 0.7), 
+        inset 0 0 20px rgba(0, 0, 0, 0.8),
+        0 0 60px rgba(201, 166, 107, 0.08);
+    padding: 2.5rem 3rem;
+    background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(0, 0, 0, 0.4) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Corner decorations for quote panel */
+.quote-panel::before,
+.quote-panel::after {
+    content: "❦";
+    position: absolute;
+    font-size: 1.5rem;
+    color: var(--color-accent-gold);
+    opacity: 0.3;
+}
+
+.quote-panel::before {
+    top: 0.75rem;
+    left: 1rem;
+}
+
+.quote-panel::after {
+    bottom: 0.75rem;
+    right: 1rem;
+    transform: rotate(180deg);
 }
 
 .quote-text {
     font-family: var(--font-body);
     font-style: italic;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     color: var(--color-accent-gold);
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
-    line-height: 1.5;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
+    line-height: 1.6;
+    letter-spacing: 0.02em;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .home-title {
-        font-size: 3rem;
+    .home-container {
+        gap: 3rem;
+        padding: 1.5rem 0 3rem;
+    }
+
+    .home-container::before,
+    .home-container::after {
+        width: 80px;
+        height: 80px;
+    }
+
+    .home-header {
+        padding: 1.5rem 1rem;
+    }
+
+    .home-logo {
+        width: 60px;
+        height: 60px;
+    }
+
+    .games-grid {
+        gap: 2rem;
+        padding: 0.5rem;
+    }
+
+    .quote-panel {
+        padding: 2rem;
     }
 }
 
 @media (max-width: 480px) {
-    .home-title {
-        font-size: 2rem;
-        letter-spacing: 2px;
+    .home-container {
+        gap: 2.5rem;
     }
 
     .home-subtitle {
-        font-size: 1.2rem;
+        letter-spacing: 0.1em;
+    }
+
+    .home-tagline {
+        font-size: 0.85rem;
     }
 
     .quote-text {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
 
     .games-grid {
         grid-template-columns: 1fr;
+    }
+
+    .divider-line {
+        width: 50px;
     }
 }

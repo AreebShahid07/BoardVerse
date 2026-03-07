@@ -3,18 +3,21 @@
     font-size: 1rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    padding: 4px;
-    /* Space for outer border */
+    letter-spacing: 0.15em;
+    padding: 3px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    transition: 
+        transform var(--transition-smooth),
+        box-shadow var(--transition-smooth),
+        background var(--transition-smooth);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
     position: relative;
+    overflow: hidden;
 }
 
 .btn-full-width {
@@ -22,82 +25,121 @@
 }
 
 .btn-inner-border {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
     width: 100%;
     height: 100%;
-    padding: 0.75rem 1.5rem;
+    padding: 0.85rem 1.5rem;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 2px;
-    transition: all 0.3s ease;
+    transition: all var(--transition-smooth);
+    position: relative;
 }
 
-/* Primary Variant (Engraved Dark Wood/Gold) */
+/* Shimmer effect on hover */
+.retro-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 100%
+    );
+    transition: left 0.6s ease;
+}
+
+.retro-btn:hover::before {
+    left: 100%;
+}
+
+/* Primary Variant (Engraved Gold) */
 .btn-primary {
-    background: linear-gradient(#c9a66b, #8c6239);
+    background: linear-gradient(180deg, #c9a66b 0%, #8c6239 100%);
     color: #1a1a1a;
     border: 2px solid #5c3b21;
     box-shadow:
-        inset 0 2px 3px rgba(255, 255, 255, 0.4),
-        inset 0 -3px 5px rgba(0, 0, 0, 0.6),
-        0 4px 6px rgba(0, 0, 0, 0.6);
-    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.3);
+        inset 0 2px 4px rgba(255, 255, 255, 0.35),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.5),
+        0 4px 8px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
 .btn-primary .btn-inner-border {
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 .btn-primary:hover:not(:disabled) {
-    background: linear-gradient(#d8b77d, #9d7045);
-    transform: translateY(-2px);
+    background: linear-gradient(180deg, #d8b87d 0%, #9d7045 100%);
+    transform: translateY(-3px);
     box-shadow:
-        inset 0 2px 3px rgba(255, 255, 255, 0.5),
-        inset 0 -3px 5px rgba(0, 0, 0, 0.6),
-        0 6px 10px rgba(0, 0, 0, 0.7);
+        inset 0 2px 4px rgba(255, 255, 255, 0.45),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.5),
+        0 8px 16px rgba(0, 0, 0, 0.6),
+        0 0 20px rgba(201, 166, 107, 0.2);
 }
 
 .btn-primary:active:not(:disabled) {
-    transform: translateY(2px);
-    background: linear-gradient(#8c6239, #c9a66b);
-    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.8);
+    transform: translateY(1px);
+    background: linear-gradient(180deg, #8c6239 0%, #c9a66b 100%);
+    box-shadow: 
+        inset 0 3px 8px rgba(0, 0, 0, 0.7),
+        0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
-/* Secondary Variant (Parchment/Dark Text) */
+/* Secondary Variant (Dark Wood) */
 .btn-secondary {
-    background: linear-gradient(#4d311b, #2b1d12);
+    background: linear-gradient(180deg, #4a2c17 0%, #2b1d12 100%);
     color: var(--color-accent-gold);
     border: 2px solid #1a110a;
     box-shadow:
-        inset 0 2px 3px rgba(255, 255, 255, 0.1),
-        inset 0 -3px 5px rgba(0, 0, 0, 0.8),
-        0 4px 6px rgba(0, 0, 0, 0.6);
+        inset 0 2px 4px rgba(255, 255, 255, 0.08),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.7),
+        0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 .btn-secondary .btn-inner-border {
-    border-color: rgba(212, 180, 131, 0.2);
+    border-color: rgba(201, 166, 107, 0.15);
 }
 
 .btn-secondary:hover:not(:disabled) {
-    background: linear-gradient(#5a3920, #382516);
+    background: linear-gradient(180deg, #5a3920 0%, #382516 100%);
     color: var(--color-accent-gold-hover);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
     box-shadow:
-        inset 0 2px 3px rgba(255, 255, 255, 0.15),
-        inset 0 -3px 5px rgba(0, 0, 0, 0.8),
-        0 6px 10px rgba(0, 0, 0, 0.7);
+        inset 0 2px 4px rgba(255, 255, 255, 0.12),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.7),
+        0 8px 16px rgba(0, 0, 0, 0.6),
+        0 0 15px rgba(201, 166, 107, 0.1);
 }
 
 .btn-secondary:active:not(:disabled) {
-    transform: translateY(2px);
-    background: linear-gradient(#2b1d12, #4d311b);
-    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.9);
+    transform: translateY(1px);
+    background: linear-gradient(180deg, #2b1d12 0%, #4a2c17 100%);
+    box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.8);
 }
 
 /* Disabled State */
 .retro-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-    filter: grayscale(0.8) brightness(0.7);
+    filter: grayscale(0.7) brightness(0.8);
     box-shadow: none;
     transform: none;
+}
+
+.retro-btn:disabled::before {
+    display: none;
+}
+
+/* Focus state for accessibility */
+.retro-btn:focus-visible {
+    outline: 2px solid var(--color-accent-gold);
+    outline-offset: 3px;
 }

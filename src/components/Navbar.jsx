@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Hexagon } from 'lucide-react';
+import { Gem } from 'lucide-react';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -10,12 +10,24 @@ const Navbar = () => {
         <nav className="retro-navbar">
             <div className="navbar-container">
                 <Link to="/" className="navbar-brand">
-                    <div className="brand-icon"><Hexagon size={28} color="var(--color-accent-gold)" /></div>
+                    <div className="brand-icon">
+                        <Gem size={26} strokeWidth={1.5} color="var(--color-accent-gold)" />
+                    </div>
                     <h1>BoardVerse</h1>
                 </Link>
                 <div className="navbar-links">
-                    <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>Club</Link>
-                    <Link to="/scoreboard" className={`nav-link ${location.pathname === '/scoreboard' ? 'active' : ''}`}>Ledger</Link>
+                    <Link 
+                        to="/" 
+                        className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}
+                    >
+                        Club
+                    </Link>
+                    <Link 
+                        to="/scoreboard" 
+                        className={`nav-link ${location.pathname === '/scoreboard' ? 'active' : ''}`}
+                    >
+                        Ledger
+                    </Link>
                 </div>
             </div>
         </nav>
