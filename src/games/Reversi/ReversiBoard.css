@@ -1,0 +1,100 @@
+.reversi-board-wrapper {
+    padding: 18px;
+    background-color: var(--color-bg-base);
+    border: 12px solid #1a1a1a;
+    border-radius: 4px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(0, 0, 0, 0.9);
+    /* Simulate carved dark wood frame */
+    background-image: linear-gradient(45deg, #1f150d 25%, #2a1c12 25%, #2a1c12 50%, #1f150d 50%, #1f150d 75%, #2a1c12 75%, #2a1c12 100%);
+    background-size: 20px 20px;
+    position: relative;
+}
+
+.reversi-board-wrapper::after {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 2px solid var(--color-accent-gold);
+    pointer-events: none;
+}
+
+.reversi-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    width: 100%;
+    height: 100%;
+    border: 4px solid #111;
+    background-color: #111;
+    /* Gap color */
+    gap: 2px;
+    /* creates the grid lines */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+.reversi-square {
+    width: 100%;
+    height: 100%;
+    /* Classic Reversi Felt Green */
+    background-color: #1b633b;
+    /* Subtler texture */
+    background-image: radial-gradient(circle at center, #217847 0%, #155230 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+    transition: filter 0.2s;
+}
+
+.reversi-square:hover {
+    filter: brightness(1.2);
+}
+
+.reversi-square.hint:hover {
+    background-color: #278f55;
+}
+
+.reversi-hint-dot {
+    width: 15%;
+    height: 15%;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+/* 3D Circular Pieces */
+.reversi-piece {
+    width: 85%;
+    height: 85%;
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    /* Adding a flip animation class hook for later if wanted, but base transitions cover a lot */
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.piece-inner {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    right: 5%;
+    bottom: 5%;
+    border-radius: 50%;
+    border-top: 2px solid rgba(255, 255, 255, 0.3);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+}
+
+.piece-black {
+    background: linear-gradient(135deg, #333 0%, #000 100%);
+    border: 1px solid #000;
+}
+
+.piece-white {
+    background: linear-gradient(135deg, #fff 0%, #d4d4d4 100%);
+    border: 1px solid #999;
+}

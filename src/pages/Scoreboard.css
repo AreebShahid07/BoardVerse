@@ -1,0 +1,171 @@
+.scoreboard-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem 0;
+    align-items: center;
+}
+
+.scoreboard-header {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.scoreboard-title {
+    font-size: 3.5rem;
+    color: var(--color-accent-gold);
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9);
+    margin-bottom: 0.5rem;
+    letter-spacing: 3px;
+}
+
+.scoreboard-content {
+    width: 100%;
+    max-width: 1000px;
+    /* Widened slightly to fit 3 columns */
+}
+
+.tournament-board {
+    padding: 20px;
+    background-color: var(--color-wood-dark);
+    border: 4px solid #1a1a1a;
+    border-radius: 8px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(0, 0, 0, 0.9);
+    position: relative;
+}
+
+.tournament-board::after {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 2px solid var(--color-accent-gold);
+    pointer-events: none;
+}
+
+.record-board-title {
+    text-align: center;
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    color: var(--color-text-dark);
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--color-wood-panel);
+    padding-bottom: 0.5rem;
+}
+
+.global-stats {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+}
+
+.games-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.game-stats-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+    background-color: rgba(0, 0, 0, 0.03);
+    border: 2px dashed rgba(139, 90, 43, 0.4);
+    border-radius: 6px;
+}
+
+.game-stats-title {
+    text-align: center;
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    color: var(--color-wood-panel);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 1px solid rgba(139, 90, 43, 0.2);
+    padding-bottom: 0.5rem;
+}
+
+.stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(92, 59, 33, 0.05);
+    border: 1px solid rgba(139, 90, 43, 0.2);
+    border-radius: 4px;
+    padding: 1.2rem;
+}
+
+.stat-label {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    color: var(--color-text-dark);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.stat-value {
+    font-family: var(--font-body);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-wood-panel);
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+/* --- Themes for each column --- */
+.theme-chess {
+    border-color: rgba(255, 215, 0, 0.3);
+    background-color: rgba(255, 215, 0, 0.02);
+}
+
+.theme-chess .game-stats-title {
+    color: #444;
+}
+
+.theme-chess .stat-value {
+    color: #1a1a1a;
+}
+
+.theme-checkers {
+    border-color: rgba(139, 90, 43, 0.3);
+}
+
+.theme-checkers .game-stats-title {
+    color: #633e21;
+}
+
+.theme-checkers .stat-value {
+    color: #8b5a2b;
+}
+
+.theme-reversi {
+    border-color: rgba(27, 99, 59, 0.3);
+    background-color: rgba(27, 99, 59, 0.02);
+}
+
+.theme-reversi .game-stats-title {
+    color: #1b633b;
+}
+
+.theme-reversi .stat-value {
+    color: #278f55;
+}
+
+.scoreboard-actions {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 900px) {
+    .games-stats-grid {
+        grid-template-columns: 1fr;
+    }
+}

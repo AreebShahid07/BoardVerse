@@ -1,0 +1,140 @@
+.checkers-board-wrapper {
+    padding: 18px;
+    background-color: var(--color-bg-base);
+    border: 12px solid #1a1a1a;
+    border-radius: 4px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(0, 0, 0, 0.9);
+    /* Simulate carved wood frame */
+    background-image: linear-gradient(45deg, #2b1d12 25%, #382516 25%, #382516 50%, #2b1d12 50%, #2b1d12 75%, #382516 75%, #382516 100%);
+    background-size: 20px 20px;
+    position: relative;
+}
+
+.checkers-board-wrapper::after {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 2px solid var(--color-accent-gold);
+    pointer-events: none;
+}
+
+.checkers-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    width: 100%;
+    height: 100%;
+    border: 2px solid rgba(0, 0, 0, 0.8);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+.checkers-square {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+
+.dark-square {
+    background-color: #5c3b21;
+    /* Sepia Wood Panel */
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.light-square {
+    background-color: #d4b483;
+    /* Antique Gold/Parchment */
+    box-shadow: inset 0 0 5px rgba(139, 90, 43, 0.3);
+}
+
+.checkers-square.selected::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 3px solid #ffcc00;
+    box-shadow: inset 0 0 10px rgba(255, 204, 0, 0.5);
+    animation: pulse-border 1.5s infinite;
+    pointer-events: none;
+}
+
+@keyframes pulse-border {
+    0% {
+        border-color: rgba(255, 204, 0, 1);
+    }
+
+    50% {
+        border-color: rgba(255, 204, 0, 0.4);
+    }
+
+    100% {
+        border-color: rgba(255, 204, 0, 1);
+    }
+}
+
+/* Vintage Wooden Discs */
+.checkers-piece {
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.checkers-square:active .checkers-piece {
+    transform: scale(0.95) translateY(2px);
+    box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+/* P1: Solid Dark Wood / Black */
+.piece-p1 {
+    background-color: #1a1a1a;
+    border: 4px solid #2a2a2a;
+    background-image: radial-gradient(circle at 30% 30%, #3a3a3a 0%, #1a1a1a 80%);
+}
+
+/* P2: Ivory / Light Wood */
+.piece-p2 {
+    background-color: #eaddcf;
+    border: 4px solid #d4b483;
+    background-image: radial-gradient(circle at 30% 30%, #ffffff 0%, #eaddcf 80%);
+}
+
+/* Concentric rings to look like carved wood tokens */
+.checkers-piece::before {
+    content: '';
+    position: absolute;
+    width: 60%;
+    height: 60%;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+.piece-p2::before {
+    border: 2px solid rgba(139, 90, 43, 0.4);
+}
+
+/* Crowns for Kings */
+.king-crown {
+    font-size: 2rem;
+    z-index: 2;
+    color: var(--color-accent-gold);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.piece-p2 .king-crown {
+    color: var(--color-accent-bronze);
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+}

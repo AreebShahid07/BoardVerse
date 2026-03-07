@@ -1,0 +1,86 @@
+.retro-btn {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px;
+    /* Space for outer border */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    position: relative;
+}
+
+.btn-full-width {
+    width: 100%;
+}
+
+.btn-inner-border {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Primary Variant (Engraved Dark Wood/Gold) */
+.btn-primary {
+    background-color: var(--color-wood-panel);
+    color: var(--color-accent-gold);
+    border: 1px solid var(--color-accent-gold);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4), inset 1px 1px 3px rgba(255, 255, 255, 0.1);
+    background-image: linear-gradient(to bottom, #6a4528, #4d311b);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background-image: linear-gradient(to bottom, #7a502e, #5a3920);
+    color: var(--color-accent-gold-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5), 0 0 10px rgba(212, 180, 131, 0.2), inset 1px 1px 3px rgba(255, 255, 255, 0.15);
+}
+
+.btn-primary:active:not(:disabled) {
+    transform: translateY(2px);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.6);
+}
+
+/* Secondary Variant (Parchment/Dark Text) */
+.btn-secondary {
+    background-color: var(--color-bg-parchment);
+    color: var(--color-text-dark);
+    border: 1px solid var(--color-wood-panel);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    background-image: linear-gradient(to bottom, #fcf4e5, #ebdfc7);
+}
+
+.btn-secondary .btn-inner-border {
+    border-color: rgba(139, 90, 43, 0.2);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background-image: linear-gradient(to bottom, #ffffff, #fcf4e5);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4), 0 0 8px rgba(235, 223, 199, 0.5);
+}
+
+.btn-secondary:active:not(:disabled) {
+    transform: translateY(2px);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Disabled State */
+.retro-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(0.8) brightness(0.7);
+    box-shadow: none;
+    transform: none;
+}

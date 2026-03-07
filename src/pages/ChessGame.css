@@ -1,0 +1,296 @@
+.chess-container {
+    padding: 1rem 0;
+}
+
+.fade-in {
+    animation: fadeIn 0.8s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* 3-Column Layout */
+.chess-layout {
+    display: grid;
+    grid-template-columns: 250px auto 300px;
+    gap: 2.5rem;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* --- LEFT COLUMN: HISTORY --- */
+.history-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.history-panel {
+    min-height: 480px;
+    max-height: 520px;
+    display: flex;
+    flex-direction: column;
+}
+
+.history-list {
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding-right: 5px;
+}
+
+.history-row {
+    display: flex;
+    font-family: monospace;
+    font-size: 1.15rem;
+    padding: 0.3rem 0;
+    border-bottom: 1px dotted rgba(139, 90, 43, 0.3);
+    color: var(--color-text-dark);
+}
+
+.history-number {
+    color: var(--color-wood-panel);
+    font-weight: bold;
+    opacity: 0.7;
+    width: 30px;
+}
+
+.history-white {
+    flex: 1;
+    padding-left: 10px;
+    font-weight: 600;
+}
+
+.history-black {
+    flex: 1;
+    color: #444;
+}
+
+.history-empty {
+    font-family: var(--font-body);
+    font-style: italic;
+    color: #777;
+    text-align: center;
+    padding: 2rem 0;
+}
+
+/* --- CENTER COLUMN: BOARD --- */
+.board-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.board-wrapper-retro {
+    padding: 18px;
+    background-color: var(--color-bg-base);
+    border: 12px solid #1a1a1a;
+    border-radius: 4px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(0, 0, 0, 0.9);
+    /* Simulate carved wood frame */
+    background-image: linear-gradient(45deg, #2b1d12 25%, #382516 25%, #382516 50%, #2b1d12 50%, #2b1d12 75%, #382516 75%, #382516 100%);
+    background-size: 20px 20px;
+    position: relative;
+}
+
+/* Add a gold inner trim */
+.board-wrapper-retro::after {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 2px solid var(--color-accent-gold);
+    pointer-events: none;
+}
+
+.game-status-bar {
+    display: flex;
+    justify-content: center;
+    padding: 0.8rem 1.5rem;
+    background-color: var(--color-bg-parchment);
+    color: var(--color-text-dark);
+    border: 3px double var(--color-accent-gold);
+    border-radius: 4px;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 700;
+    box-shadow: inset 0 0 15px rgba(139, 90, 43, 0.2), 0 5px 10px rgba(0, 0, 0, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.turn-indicator.active-w {
+    color: #1a1a1a;
+}
+
+.turn-indicator.active-b {
+    color: #633e21;
+}
+
+.bot-thinking {
+    font-style: italic;
+    color: var(--color-wood-panel);
+    animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.4;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.4;
+    }
+}
+
+/* --- RIGHT COLUMN: CONTROLS --- */
+.controls-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.control-group {
+    margin-bottom: 2rem;
+}
+
+.control-group label {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--color-accent-gold);
+    display: block;
+    margin-bottom: 0.8rem;
+    font-size: 1.2rem;
+    border-bottom: 1px solid rgba(212, 180, 131, 0.3);
+    padding-bottom: 0.3rem;
+}
+
+.btn-icon {
+    margin-right: 8px;
+    font-size: 1.1rem;
+}
+
+.mode-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.control-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-top: 2.5rem;
+}
+
+.vintage-slider {
+    width: 100%;
+    accent-color: var(--color-accent-gold);
+    height: 6px;
+    background: rgba(0, 0, 0, 0.5);
+    outline: none;
+    border-radius: 3px;
+    border: 1px solid var(--color-wood-panel);
+}
+
+.vintage-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--color-accent-gold);
+    cursor: pointer;
+    border: 2px solid #5c3b21;
+}
+
+/* --- GAME OVER MODAL --- */
+.game-over-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 10, 5, 0.85);
+    /* Dark wood tint overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.game-over-modal {
+    min-width: 450px;
+    text-align: center;
+    border: none;
+    /* Handled by outer parchment border */
+}
+
+.gold-frame-inner {
+    border: 4px double var(--color-accent-gold);
+    padding: 2.5rem;
+    background-color: transparent;
+}
+
+.game-over-title {
+    font-size: 2.5rem;
+    color: var(--color-text-dark);
+    font-family: var(--font-heading);
+}
+
+.game-over-text {
+    font-size: 2rem;
+    color: var(--color-wood-panel);
+    line-height: 1.4;
+    font-family: var(--font-body);
+}
+
+.slide-in {
+    animation: slideUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1100px) {
+    .chess-layout {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+
+    .history-section,
+    .controls-section {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .history-panel {
+        min-height: 250px;
+    }
+
+    .mode-selector {
+        flex-direction: row;
+    }
+}
