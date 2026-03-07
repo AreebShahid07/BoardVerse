@@ -73,8 +73,6 @@
 }
 
 /* --- RIGHT COLUMN: CONTROLS --- */
-.settingsPanel {}
-
 .controlGroup {
     margin-bottom: 2rem;
 }
@@ -133,4 +131,15 @@
     .modeSelector {
         flex-direction: row;
     }
+}
+
+/* Chess Piece Hover Effects */
+.boardWrapperRetro [data-piece] {
+    transition: transform 0.2s ease, filter 0.2s ease !important;
+}
+
+.boardWrapperRetro [data-piece]:hover {
+    transform: translateY(-6px) !important;
+    filter: drop-shadow(0 10px 6px rgba(0, 0, 0, 0.6)) !important;
+    cursor: grab;
 }

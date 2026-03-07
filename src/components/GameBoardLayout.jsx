@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import './GameBoardLayout.css';
 
 const GameBoardLayout = ({ leftPanel, centerStatusBar, centerBoard, rightPanel, gameOverModal }) => {
@@ -11,14 +12,19 @@ const GameBoardLayout = ({ leftPanel, centerStatusBar, centerBoard, rightPanel, 
                 </div>
 
                 {/* Center Column: Board */}
-                <div className="layout-section layout-center">
+                <motion.div
+                    className="layout-section layout-center"
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                >
                     {centerStatusBar && (
                         <div className="game-status-bar">
                             {centerStatusBar}
                         </div>
                     )}
                     {centerBoard}
-                </div>
+                </motion.div>
 
                 {/* Right Column: Controls */}
                 <div className="layout-section layout-right">

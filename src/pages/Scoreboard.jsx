@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import CountUp from 'react-countup';
 import { getStats, resetStats } from '../utils/storage';
 import RetroPanel from '../components/RetroPanel';
 import Button from '../components/Button';
@@ -26,21 +28,32 @@ const Scoreboard = () => {
     const renderGameStats = (gameTitle, gameCode, themeClass) => {
         const gameStats = stats[gameCode] || { matches: 0, playerWins: 0, botWins: 0 };
         return (
-            <div className={`${styles['game-stats-column']} ${styles[themeClass]}`}>
+            <motion.div
+                className={`${styles['game-stats-column']} ${styles[themeClass]}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+            >
                 <h3 className={styles['game-stats-title']}>{gameTitle}</h3>
                 <div className={styles['stat-card']}>
                     <span className={styles['stat-label']}>Matches</span>
-                    <span className={styles['stat-value']}>{gameStats.matches || 0}</span>
+                    <span className={styles['stat-value']}>
+                        <CountUp start={0} end={gameStats.matches || 0} duration={2} useEasing={true} />
+                    </span>
                 </div>
                 <div className={styles['stat-card']}>
                     <span className={styles['stat-label']}>Human Wins</span>
-                    <span className={styles['stat-value']}>{gameStats.playerWins || 0}</span>
+                    <span className={styles['stat-value']}>
+                        <CountUp start={0} end={gameStats.playerWins || 0} duration={2} useEasing={true} />
+                    </span>
                 </div>
                 <div className={styles['stat-card']}>
                     <span className={styles['stat-label']}>Automaton Wins</span>
-                    <span className={styles['stat-value']}>{gameStats.botWins || 0}</span>
+                    <span className={styles['stat-value']}>
+                        <CountUp start={0} end={gameStats.botWins || 0} duration={2} useEasing={true} />
+                    </span>
                 </div>
-            </div>
+            </motion.div>
         );
     };
 
@@ -59,15 +72,28 @@ const Scoreboard = () => {
                         <div className={styles['global-stats']}>
                             <div className={styles['stat-card']}>
                                 <span className={styles['stat-label']}>Total Historical Matches</span>
-                                <span className={styles['stat-value']}>{stats.totalGames}</span>
+                                <span className={styles['stat-value']}>
+                                    <CountUp start={0} end={stats.totalGames} duration={2.5} useEasing={true} />
+                                </span>
                             </div>
                         </div>
 
-                        <div className={styles['games-stats-grid']}>
+                        <motion.div
+                            className={styles['games-stats-grid']}
+                            initial="hidden"
+                            animate="visible"
+                            variants={{
+                                hidden: { opacity: 0 },
+                                visible: {
+                                    opacity: 1,
+                                    transition: { staggerChildren: 0.15 }
+                                }
+                            }}
+                        >
                             {renderGameStats('Chess', 'chess', 'theme-chess')}
                             {renderGameStats('Checkers', 'checkers', 'theme-checkers')}
                             {renderGameStats('Reversi', 'reversi', 'theme-reversi')}
-                        </div>
+                        </motion.div>
 
                         <div className={styles['scoreboard-actions']}>
                             <Button variant="secondary" onClick={handleReset}>Clear Ledger</Button>

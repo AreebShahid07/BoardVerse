@@ -75,7 +75,12 @@
     position: relative;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
     /* Adding a flip animation class hook for later if wanted, but base transitions cover a lot */
-    transition: transform 0.3s ease, background-color 0.3s ease;
+    transition: transform 0.2s ease, background-color 0.3s ease, filter 0.2s ease;
+}
+
+.reversi-square:hover .reversi-piece {
+    transform: translateY(-6px);
+    filter: drop-shadow(0 10px 6px rgba(0, 0, 0, 0.5));
 }
 
 .piece-inner {
