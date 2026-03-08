@@ -4,11 +4,11 @@ import RetroPanel from './RetroPanel';
 import Button from './Button';
 import './GameCard.css';
 
-const GameCard = ({ title, status, description, linkTo, icon }) => {
+const GameCard = ({ title, status, description, linkTo, icon, theme }) => {
     const isAvailable = status === 'available';
 
     return (
-        <RetroPanel className="game-card" woodStyle="parchment" padding="normal">
+        <RetroPanel className={`game-card card-theme-${theme}`} woodStyle="parchment" padding="normal">
             <div className="game-card-icon">{icon}</div>
             <h3 className="game-card-title">{title}</h3>
             <div className="game-card-divider" />

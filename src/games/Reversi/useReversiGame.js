@@ -10,7 +10,9 @@ export const useReversiGame = (soundEnabled) => {
     const [botLevel, setBotLevel] = useState(3);
     const [botIsThinking, setBotIsThinking] = useState(false);
     const [gameOverMsg, setGameOverMsg] = useState('');
+    const [gameOverTitle, setGameOverTitle] = useState('');
     const [moveHistory, setMoveHistory] = useState([]);
+    const [engineHistory, setEngineHistory] = useState([]);
 
     const colNames = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     const getNotation = (r, c) => `${colNames[c]}${8 - r}`;
@@ -19,19 +21,25 @@ export const useReversiGame = (soundEnabled) => {
     useEffect(() => {
         const status = engine.isGameOver();
         if (status.over) {
-            let msg = 'Match Concluded';
+            let title = 'Match Concluded';
+            let msg = '';
             let winner = 'reversi';
 
             if (status.winner === P1) {
-                msg = `Victory!\nBlack Wins (${status.p1Count} to ${status.p2Count})`;
+                title = 'Victory!';
+                msg = `Black (Human) Wins — ${status.p1Count} to ${status.p2Count}`;
                 winner = 'player';
             } else if (status.winner === P2) {
-                msg = `Victory!\nWhite Wins (${status.p2Count} to ${status.p1Count})`;
+                const isPlayerWin = gameMode !== 'bot';
+                title = isPlayerWin ? 'Victory!' : 'Defeat';
+                msg = `White ${isPlayerWin ? '(Human)' : '(Automaton)'} Wins — ${status.p2Count} to ${status.p1Count}`;
                 winner = gameMode === 'bot' ? 'bot' : 'player';
             } else {
-                msg = `Draw\nScores Tied at ${status.p1Count}`;
+                title = 'Draw';
+                msg = `Scores are tied at ${status.p1Count}`;
             }
 
+            setGameOverTitle(title);
             setGameOverMsg(msg);
             recordGameResult(winner, 'reversi');
         }
@@ -54,6 +62,7 @@ export const useReversiGame = (soundEnabled) => {
                         else playMoveSound();
                     }
 
+                    setEngineHistory(prev => [...prev, { board: engine.board, turn: engine.currentTurn, history: moveHistory }]);
                     const notation = `W: ${getNotation(bestMove.r, bestMove.c)} (+${flippedCount})`;
                     setMoveHistory(prev => [...prev, notation]);
                     setEngine(newEngine);
@@ -83,6 +92,7 @@ export const useReversiGame = (soundEnabled) => {
                 else playMoveSound();
             }
 
+            setEngineHistory(prev => [...prev, { board: engine.board, turn: engine.currentTurn, history: moveHistory }]);
             const prefix = engine.currentTurn === P1 ? 'B: ' : 'W: ';
             const notation = `${prefix}${getNotation(r, c)} (+${flippedCount})`;
             setMoveHistory(prev => [...prev, notation]);
@@ -93,8 +103,29 @@ export const useReversiGame = (soundEnabled) => {
     const restartGame = () => {
         setEngine(new Reversi());
         setGameOverMsg('');
+        setGameOverTitle('');
         setMoveHistory([]);
+        setEngineHistory([]);
         setBotIsThinking(false);
+    };
+
+    const undoMove = () => {
+        if (engineHistory.length === 0 || botIsThinking) return;
+
+        let stepsToUndo = (gameMode === 'bot') ? 2 : 1;
+        if (engineHistory.length < stepsToUndo) stepsToUndo = engineHistory.length;
+
+        const newHistory = [...engineHistory];
+        let lastState;
+        for (let i = 0; i < stepsToUndo; i++) {
+            lastState = newHistory.pop();
+        }
+
+        setEngine(new Reversi(lastState.board, lastState.turn));
+        setMoveHistory(lastState.history);
+        setEngineHistory(newHistory);
+        setGameOverMsg('');
+        setGameOverTitle('');
     };
 
     const validMoves = engine.getAllValidMovesForPlayer(engine.currentTurn);
@@ -102,7 +133,7 @@ export const useReversiGame = (soundEnabled) => {
 
     return {
         engine, gameMode, setGameMode, botLevel, setBotLevel,
-        botIsThinking, gameOverMsg, moveHistory,
-        handleSquareClick, restartGame, validMoves, p1Count, p2Count
+        botIsThinking, gameOverTitle, gameOverMsg, moveHistory,
+        handleSquareClick, restartGame, undoMove, validMoves, p1Count, p2Count
     };
 };

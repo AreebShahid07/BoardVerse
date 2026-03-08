@@ -55,6 +55,7 @@ const Home = () => {
                         icon="♔"
                         status="available"
                         linkTo="/chess"
+                        theme="chess"
                         description="The noble game of kings and queens. Play against a friend or challenge our mechanical automaton across five difficulty levels."
                     />
                 </div>
@@ -65,6 +66,7 @@ const Home = () => {
                         icon="⛂"
                         status="available"
                         linkTo="/checkers"
+                        theme="checkers"
                         description="The vintage parlor favorite. Master the diagonal jump to victory in this timeless classic of strategy and nimble tactical movement."
                     />
                 </div>
@@ -75,6 +77,7 @@ const Home = () => {
                         icon="◓"
                         status="available"
                         linkTo="/reversi"
+                        theme="reversi"
                         description="The elegant tactical battle. Outflank your opponent to dominate the board in this sophisticated game of skill and dark strategy."
                     />
                 </div>

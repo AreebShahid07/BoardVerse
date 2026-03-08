@@ -2,6 +2,30 @@
     padding: 1rem 0;
 }
 
+.game-nav-header {
+    max-width: 1200px;
+    margin: 0 auto 1.5rem;
+    padding: 0 1rem;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-accent-gold);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.back-link:hover {
+    color: var(--color-accent-gold-hover);
+    transform: translateX(-5px);
+}
+
 .fade-in {
     animation: fadeIn 0.8s ease-in;
 }
@@ -158,21 +182,34 @@
         gap: 1.5rem;
     }
 
+    .layout-section.layout-left,
     .layout-section.layout-right {
-        order: 1;
+        max-width: 100%;
+    }
+
+    .game-nav-header {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    .back-link {
+        font-size: 0.9rem;
     }
 
     .layout-section.layout-center {
+        order: 1;
+        width: 100%;
+        align-items: center;
+    }
+
+    .layout-section.layout-right {
         order: 2;
+        width: 100%;
     }
 
     .layout-section.layout-left {
         order: 3;
-    }
-
-    .layout-section.layout-left,
-    .layout-section.layout-right {
-        max-width: 100%;
+        width: 100%;
     }
 
     .game-status-bar {

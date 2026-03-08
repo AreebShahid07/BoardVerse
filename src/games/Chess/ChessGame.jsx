@@ -5,6 +5,7 @@ import { useChessGame } from './useChessGame';
 import GameBoardLayout from '../../components/GameBoardLayout';
 import RetroPanel from '../../components/RetroPanel';
 import Button from '../../components/Button';
+import GameOverModal from '../../components/GameOverModal';
 import { Bot, User, Volume2, VolumeX, RotateCcw, Undo2 } from 'lucide-react';
 import styles from './ChessGame.module.css';
 
@@ -15,7 +16,7 @@ const ChessGame = () => {
 
     const {
         game, gameMode, setGameMode, botLevel, setBotLevel,
-        botIsThinking, gameOverMsg, moveHistory, moveFrom,
+        botIsThinking, gameOverTitle, gameOverMsg, moveHistory, moveFrom,
         onDrop, onSquareClick, restartGame, undoMove
     } = useChessGame(soundEnabled);
 
@@ -49,17 +50,20 @@ const ChessGame = () => {
     const possibleMoves = React.useMemo(() => {
         if (!moveFrom) return [];
         return game.moves({ square: moveFrom, verbose: true }).map(m => m.to);
-    }, [game.fen(), moveFrom]); // use fen() to trigger on game changes too
+    }, [game.fen(), moveFrom]);
 
     // Build customSquareStyles for highlighting
     const currentSquareStyles = {};
     if (moveFrom) {
-        currentSquareStyles[moveFrom] = { backgroundColor: 'rgba(255, 255, 0, 0.4)' };
+        currentSquareStyles[moveFrom] = {
+            backgroundColor: 'rgba(212, 180, 131, 0.45)',
+            boxShadow: 'inset 0 0 10px rgba(0,0,0,0.5)'
+        };
         possibleMoves.forEach(sq => {
             currentSquareStyles[sq] = {
                 background: game.get(sq) && game.get(sq).color !== game.turn()
-                    ? 'radial-gradient(circle, rgba(0,0,0,.1) 85%, transparent 85%)'
-                    : 'radial-gradient(circle, rgba(0,0,0,.1) 25%, transparent 25%)',
+                    ? 'radial-gradient(circle, rgba(0,0,0,.2) 85%, transparent 85%)'
+                    : 'radial-gradient(circle, rgba(0,0,0,.2) 25%, transparent 25%)',
                 borderRadius: '50%'
             };
         });
@@ -164,19 +168,12 @@ const ChessGame = () => {
         </RetroPanel>
     );
 
-    const gameOverModalNode = gameOverMsg ? (
-        <RetroPanel woodStyle="parchment" padding="large" className="game-over-modal slide-in">
-            <div className="gold-frame-inner">
-                <h1 className="game-over-title">Victory!</h1>
-                <div className="retro-divider" style={{ width: '60%', margin: '1rem auto' }} />
-                <h2 className="game-over-text">{gameOverMsg.split('\n').map((line, i) => <div key={i}>{line}</div>)}</h2>
-
-                <div className="modal-actions" style={{ marginTop: '2.5rem', display: 'flex', gap: '1rem', flexDirection: 'column' }}>
-                    <Button onClick={restartGame} variant="primary" fullWidth>Play Again</Button>
-                    <Button onClick={() => navigate('/')} variant="secondary" fullWidth>Return to Lobby</Button>
-                </div>
-            </div>
-        </RetroPanel>
+    const gameOverModalNode = (gameOverTitle && gameOverMsg) ? (
+        <GameOverModal
+            title={gameOverTitle}
+            message={gameOverMsg}
+            onRestart={restartGame}
+        />
     ) : null;
 
     return (

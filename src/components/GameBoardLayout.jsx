@@ -1,10 +1,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { ChevronLeft } from 'lucide-react';
 import './GameBoardLayout.css';
 
 const GameBoardLayout = ({ leftPanel, centerStatusBar, centerBoard, rightPanel, gameOverModal }) => {
     return (
         <div className="game-board-container fade-in">
+            <div className="game-nav-header">
+                <Link to="/" className="back-link">
+                    <ChevronLeft size={20} /> Return to Club Lobby
+                </Link>
+            </div>
             <div className="game-board-layout">
                 {/* Left Column: History/Notation */}
                 <div className="layout-section layout-left">

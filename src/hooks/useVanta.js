@@ -29,7 +29,7 @@ const useVanta = (ref) => {
                 vantaEffect.current = null;
             }
         };
-    }, [ref]);
+    }, []);
 };
 
 export default useVanta;

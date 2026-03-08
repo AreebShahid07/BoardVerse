@@ -21,12 +21,17 @@ const Scoreboard = () => {
     const handleReset = () => {
         if (window.confirm('Do you wish to completely wipe the Chronicles of Strategy?')) {
             resetStats();
-            setStats(getStats());
+            const s = getStats();
+            setStats(s);
         }
     };
 
     const renderGameStats = (gameTitle, gameCode, themeClass) => {
-        const gameStats = stats[gameCode] || { matches: 0, playerWins: 0, botWins: 0 };
+        const gameStats = stats[gameCode] || { matches: 0, playerWins: 0, botWins: 0, draws: 0 };
+        const winRate = gameStats.matches > 0
+            ? ((gameStats.playerWins / gameStats.matches) * 100).toFixed(1)
+            : 0;
+
         return (
             <motion.div
                 className={`${styles['game-stats-column']} ${styles[themeClass]}`}
@@ -35,12 +40,20 @@ const Scoreboard = () => {
                 transition={{ duration: 0.5 }}
             >
                 <h3 className={styles['game-stats-title']}>{gameTitle}</h3>
-                <div className={styles['stat-card']}>
-                    <span className={styles['stat-label']}>Matches</span>
-                    <span className={styles['stat-value']}>
-                        <CountUp start={0} end={gameStats.matches || 0} duration={2} useEasing={true} />
-                    </span>
+
+                <div className={styles['stat-grid-mini']}>
+                    <div className={styles['stat-card-mini']}>
+                        <span className={styles['stat-label']}>Matches</span>
+                        <span className={styles['stat-value']}>
+                            <CountUp start={0} end={gameStats.matches || 0} duration={2} useEasing={true} />
+                        </span>
+                    </div>
+                    <div className={styles['stat-card-mini']}>
+                        <span className={styles['stat-label']}>Win Rate</span>
+                        <span className={styles['stat-value']}>{winRate}%</span>
+                    </div>
                 </div>
+
                 <div className={styles['stat-card']}>
                     <span className={styles['stat-label']}>Human Wins</span>
                     <span className={styles['stat-value']}>
@@ -51,6 +64,12 @@ const Scoreboard = () => {
                     <span className={styles['stat-label']}>Automaton Wins</span>
                     <span className={styles['stat-value']}>
                         <CountUp start={0} end={gameStats.botWins || 0} duration={2} useEasing={true} />
+                    </span>
+                </div>
+                <div className={styles['stat-card']}>
+                    <span className={styles['stat-label']}>Stalemates/Draws</span>
+                    <span className={styles['stat-value']}>
+                        <CountUp start={0} end={gameStats.draws || 0} duration={2} useEasing={true} />
                     </span>
                 </div>
             </motion.div>
@@ -71,9 +90,15 @@ const Scoreboard = () => {
 
                         <div className={styles['global-stats']}>
                             <div className={styles['stat-card']}>
-                                <span className={styles['stat-label']}>Total Historical Matches</span>
+                                <span className={styles['stat-label']}>Total Matches Played</span>
                                 <span className={styles['stat-value']}>
                                     <CountUp start={0} end={stats.totalGames} duration={2.5} useEasing={true} />
+                                </span>
+                            </div>
+                            <div className={styles['stat-card']}>
+                                <span className={styles['stat-label']}>Total Strategic Draws</span>
+                                <span className={styles['stat-value']}>
+                                    <CountUp start={0} end={stats.totalDraws || 0} duration={2.5} useEasing={true} />
                                 </span>
                             </div>
                         </div>

@@ -10,29 +10,42 @@ export const useChessGame = (soundEnabled) => {
     const [botLevel, setBotLevel] = useState(1);
     const [botIsThinking, setBotIsThinking] = useState(false);
     const [gameOverMsg, setGameOverMsg] = useState('');
+    const [gameOverTitle, setGameOverTitle] = useState('');
     const [moveHistory, setMoveHistory] = useState([]);
     const [moveFrom, setMoveFrom] = useState('');
 
     // Check Game Over
     useEffect(() => {
         if (game.isGameOver()) {
-            let msg = 'Match Concluded';
+            let title = 'Match Concluded';
+            let msg = '';
             let winner = 'chess';
+
             if (game.isCheckmate()) {
-                const turnText = game.turn() === 'w' ? 'Black' : 'White';
-                msg = `Checkmate\n${turnText} Wins`;
-                if (gameMode === 'bot') {
-                    winner = game.turn() === 'w' ? 'bot' : 'player';
-                } else {
-                    winner = 'player';
-                }
+                const winnerColor = game.turn() === 'w' ? 'Black' : 'White';
+                const isPlayerWin = gameMode === 'bot'
+                    ? game.turn() === 'b'
+                    : true;
+                title = isPlayerWin || gameMode === 'local' ? 'Victory!' : 'Defeat';
+                msg = `Checkmate — ${winnerColor} Wins`;
+                winner = gameMode === 'bot' ? (game.turn() === 'w' ? 'bot' : 'player') : 'player';
             } else if (game.isDraw()) {
-                msg = 'Draw';
-            } else if (game.isStalemate()) {
-                msg = 'Stalemate';
+                title = 'Draw';
+                winner = 'draw';
+                if (game.isStalemate()) {
+                    msg = 'Stalemate — No legal moves';
+                } else if (game.isThreefoldRepetition()) {
+                    msg = 'Threefold Repetition';
+                } else if (game.isInsufficientMaterial()) {
+                    msg = 'Insufficient Material';
+                } else {
+                    msg = '50-Move Rule';
+                }
             }
+
+            setGameOverTitle(title);
             setGameOverMsg(msg);
-            recordGameResult(winner);
+            recordGameResult(winner, 'chess');
         }
     }, [game.fen(), gameMode]);
 
@@ -121,6 +134,7 @@ export const useChessGame = (soundEnabled) => {
     const restartGame = () => {
         setGame(new Chess());
         setGameOverMsg('');
+        setGameOverTitle('');
         setMoveHistory([]);
         setMoveFrom('');
         setBotIsThinking(false);
@@ -139,11 +153,12 @@ export const useChessGame = (soundEnabled) => {
             setMoveHistory(gameCopy.history());
         }
         setGameOverMsg('');
+        setGameOverTitle('');
     };
 
     return {
         game, gameMode, setGameMode, botLevel, setBotLevel,
-        botIsThinking, gameOverMsg, moveHistory, moveFrom,
+        botIsThinking, gameOverTitle, gameOverMsg, moveHistory, moveFrom,
         onDrop, onSquareClick, restartGame, undoMove
     };
 };

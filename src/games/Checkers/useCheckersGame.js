@@ -10,10 +10,12 @@ export const useCheckersGame = (soundEnabled) => {
     const [botLevel, setBotLevel] = useState(3);
     const [botIsThinking, setBotIsThinking] = useState(false);
     const [gameOverMsg, setGameOverMsg] = useState('');
+    const [gameOverTitle, setGameOverTitle] = useState('');
     const [moveHistory, setMoveHistory] = useState([]);
 
     const [selectedSquare, setSelectedSquare] = useState(null);
     const [validJumpsFromSelected, setValidJumpsFromSelected] = useState(null);
+    const [engineHistory, setEngineHistory] = useState([]);
 
     const colNames = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     const getNotation = (r, c) => `${colNames[c]}${8 - r}`;
@@ -21,17 +23,25 @@ export const useCheckersGame = (soundEnabled) => {
     useEffect(() => {
         const status = engine.isGameOver();
         if (status.over) {
-            let msg = 'Match Concluded';
+            let title = 'Match Concluded';
+            let msg = '';
             let winner = 'checkers';
 
             if (status.winner === P1) {
-                msg = `Victory!\nRed (Player 1) Wins`;
+                title = 'Victory!';
+                msg = `Red (Human) Wins the Match`;
                 winner = 'player';
             } else if (status.winner === P2) {
-                msg = `Victory!\nBlack Wins`;
+                const isPlayerWin = gameMode !== 'bot';
+                title = isPlayerWin ? 'Victory!' : 'Defeat';
+                msg = `Black ${isPlayerWin ? '(Human)' : '(Automaton)'} Wins the Match`;
                 winner = gameMode === 'bot' ? 'bot' : 'player';
+            } else {
+                title = 'Draw';
+                msg = 'The board is locked, or no pieces remain.';
             }
 
+            setGameOverTitle(title);
             setGameOverMsg(msg);
             recordGameResult(winner, 'checkers');
         }
@@ -55,6 +65,7 @@ export const useCheckersGame = (soundEnabled) => {
                     else playMoveSound();
                 }
 
+                setEngineHistory(prev => [...prev, { board: engine.board, turn: engine.currentTurn, history: moveHistory }]);
                 const notation = `${getNotation(bestMove.from.r, bestMove.from.c)}${captured ? 'x' : '-'}${getNotation(bestMove.to.r, bestMove.to.c)}`;
                 setMoveHistory(prev => [...prev, notation]);
                 setEngine(newEngine);
@@ -116,6 +127,7 @@ export const useCheckersGame = (soundEnabled) => {
                 } else {
                     setSelectedSquare(null);
                     setValidJumpsFromSelected(null);
+                    setEngineHistory(prev => [...prev, { board: engine.board, turn: engine.currentTurn, history: moveHistory }]);
                     setMoveHistory(prev => [...prev, notation]);
                 }
 
@@ -127,16 +139,39 @@ export const useCheckersGame = (soundEnabled) => {
     const restartGame = () => {
         setEngine(new Checkers());
         setGameOverMsg('');
+        setGameOverTitle('');
         setMoveHistory([]);
+        setEngineHistory([]);
         setSelectedSquare(null);
         setValidJumpsFromSelected(null);
         setBotIsThinking(false);
     };
 
+    const undoMove = () => {
+        if (engineHistory.length === 0 || botIsThinking) return;
+
+        let stepsToUndo = (gameMode === 'bot') ? 2 : 1;
+        if (engineHistory.length < stepsToUndo) stepsToUndo = engineHistory.length;
+
+        const newHistory = [...engineHistory];
+        let lastState;
+        for (let i = 0; i < stepsToUndo; i++) {
+            lastState = newHistory.pop();
+        }
+
+        setEngine(new Checkers(lastState.board, lastState.turn));
+        setMoveHistory(lastState.history);
+        setEngineHistory(newHistory);
+        setGameOverMsg('');
+        setGameOverTitle('');
+        setSelectedSquare(null);
+        setValidJumpsFromSelected(null);
+    };
+
     return {
         engine, gameMode, setGameMode, botLevel, setBotLevel,
-        botIsThinking, gameOverMsg, moveHistory,
+        botIsThinking, gameOverTitle, gameOverMsg, moveHistory,
         selectedSquare, validJumpsFromSelected,
-        handleSquareClick, restartGame
+        handleSquareClick, restartGame, undoMove
     };
 };

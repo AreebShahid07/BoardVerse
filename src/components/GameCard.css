@@ -9,7 +9,31 @@
 
 .game-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 0 50px rgba(139, 90, 43, 0.15);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 0 50px rgba(139, 90, 43, 0.1);
+}
+
+.card-theme-chess {
+    border-top: 4px solid #d4b483;
+}
+
+.card-theme-chess:hover {
+    box-shadow: 0 15px 35px rgba(212, 180, 131, 0.2), inset 0 0 50px rgba(212, 180, 131, 0.05);
+}
+
+.card-theme-checkers {
+    border-top: 4px solid #8c2a2a;
+}
+
+.card-theme-checkers:hover {
+    box-shadow: 0 15px 35px rgba(140, 42, 42, 0.2), inset 0 0 50px rgba(140, 42, 42, 0.05);
+}
+
+.card-theme-reversi {
+    border-top: 4px solid #1f365c;
+}
+
+.card-theme-reversi:hover {
+    box-shadow: 0 15px 35px rgba(31, 54, 92, 0.2), inset 0 0 50px rgba(31, 54, 92, 0.05);
 }
 
 .game-card-icon {

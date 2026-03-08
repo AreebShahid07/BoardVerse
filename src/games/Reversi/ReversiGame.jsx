@@ -6,7 +6,8 @@ import GameBoardLayout from '../../components/GameBoardLayout';
 import ReversiBoard from './ReversiBoard';
 import RetroPanel from '../../components/RetroPanel';
 import Button from '../../components/Button';
-import { Bot, User, Volume2, VolumeX, RotateCcw } from 'lucide-react';
+import GameOverModal from '../../components/GameOverModal';
+import { Bot, User, Volume2, VolumeX, RotateCcw, Undo2 } from 'lucide-react';
 import styles from './ReversiGame.module.css';
 
 const ReversiGame = () => {
@@ -16,8 +17,8 @@ const ReversiGame = () => {
 
     const {
         engine, gameMode, setGameMode, botLevel, setBotLevel,
-        botIsThinking, gameOverMsg, moveHistory,
-        handleSquareClick, restartGame, validMoves, p1Count, p2Count
+        botIsThinking, gameOverTitle, gameOverMsg, moveHistory,
+        handleSquareClick, restartGame, undoMove, validMoves, p1Count, p2Count
     } = useReversiGame(soundEnabled);
 
     // Responsive board
@@ -125,6 +126,9 @@ const ReversiGame = () => {
                         {soundEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
                     </span> Toggle Sound
                 </Button>
+                <Button onClick={undoMove} variant="secondary" fullWidth disabled={moveHistory.length === 0}>
+                    <span className={styles.btnIcon}><Undo2 size={18} /></span> Retract Move
+                </Button>
                 <Button onClick={restartGame} variant="primary" fullWidth>
                     <span className={styles.btnIcon}><RotateCcw size={18} /></span> New Match
                 </Button>
@@ -132,19 +136,12 @@ const ReversiGame = () => {
         </RetroPanel>
     );
 
-    const gameOverModalNode = gameOverMsg ? (
-        <RetroPanel woodStyle="parchment" padding="large" className="game-over-modal slide-in">
-            <div className="gold-frame-inner">
-                <h1 className="game-over-title">Match Concluded</h1>
-                <div className="retro-divider" style={{ width: '60%', margin: '1rem auto' }} />
-                <h2 className="game-over-text">{gameOverMsg.split('\n').map((line, i) => <div key={i}>{line}</div>)}</h2>
-
-                <div className="modal-actions" style={{ marginTop: '2.5rem', display: 'flex', gap: '1rem', flexDirection: 'column' }}>
-                    <Button onClick={restartGame} variant="primary" fullWidth>Play Again</Button>
-                    <Button onClick={() => navigate('/')} variant="secondary" fullWidth>Return to Lobby</Button>
-                </div>
-            </div>
-        </RetroPanel>
+    const gameOverModalNode = (gameOverTitle && gameOverMsg) ? (
+        <GameOverModal
+            title={gameOverTitle}
+            message={gameOverMsg}
+            onRestart={restartGame}
+        />
     ) : null;
 
     return (
