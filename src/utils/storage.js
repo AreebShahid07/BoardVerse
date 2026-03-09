@@ -17,13 +17,13 @@ export const getStats = () => {
             const parsed = JSON.parse(data);
             // Ensure the nested structure exists (legacy state migration support)
             if (parsed.chess && typeof parsed.chess === 'object') {
-                return parsed;
+                return { ...defaultStats, ...parsed };
             }
         }
     } catch (e) {
         console.error("Failed to read from LocalStorage", e);
     }
-    return { ...defaultStats, ...parsed };
+    return { ...defaultStats };
 };
 
 export const saveStats = (stats) => {
