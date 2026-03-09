@@ -13,7 +13,14 @@ import styles from './ReversiGame.module.css';
 const ReversiGame = () => {
     const navigate = useNavigate();
     const [soundEnabled, setSoundEnabled] = useState(true);
-    const [boardWidth, setBoardWidth] = useState(550);
+    const [boardWidth, setBoardWidth] = useState(() => {
+        if (typeof window !== 'undefined') {
+            const w = window.innerWidth;
+            if (w < 800) return w - 60;
+            if (w < 1100) return 400;
+        }
+        return 550;
+    });
 
     const {
         engine, gameMode, setGameMode, botLevel, setBotLevel,

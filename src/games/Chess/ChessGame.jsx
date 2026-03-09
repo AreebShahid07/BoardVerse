@@ -12,7 +12,14 @@ import styles from './ChessGame.module.css';
 const ChessGame = () => {
     const navigate = useNavigate();
     const [soundEnabled, setSoundEnabled] = useState(true);
-    const [boardWidth, setBoardWidth] = useState(500);
+    const [boardWidth, setBoardWidth] = useState(() => {
+        if (typeof window !== 'undefined') {
+            const w = window.innerWidth;
+            if (w < 800) return w - 60;
+            if (w < 1100) return 400;
+        }
+        return 550;
+    });
 
     const {
         game, gameMode, setGameMode, botLevel, setBotLevel,
