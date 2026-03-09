@@ -147,6 +147,7 @@
     .boardWrapperRetro {
         padding: 10px;
         border-width: 6px;
+        transform: translateX(12px);
     }
 }
 

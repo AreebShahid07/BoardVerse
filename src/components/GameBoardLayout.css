@@ -206,6 +206,9 @@
     .layout-section.layout-left,
     .layout-section.layout-right {
         max-width: 100%;
+        width: 94%;
+        margin: 0 auto;
+        transform: translateX(10px);
     }
 
     .game-nav-header {
@@ -226,6 +229,8 @@
     .layout-section.layout-right {
         order: 2;
         width: 100%;
+        position: relative;
+        right: 10px;
     }
 
     .layout-section.layout-left {

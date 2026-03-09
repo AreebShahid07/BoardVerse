@@ -103,3 +103,12 @@
     background: linear-gradient(135deg, #fff 0%, #d4d4d4 100%);
     border: 1px solid #999;
 }
+
+/* Responsive */
+@media (max-width: 600px) {
+    .reversi-board-wrapper {
+        padding: 10px;
+        border-width: 6px;
+        transform: translateX(12px);
+    }
+}
