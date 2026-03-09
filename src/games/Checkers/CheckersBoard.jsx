@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { P1, P2, P1_KING, P2_KING } from './engine';
 import { Crown } from 'lucide-react';
 import './CheckersBoard.css';
@@ -59,4 +59,4 @@ const CheckersBoard = ({ board, onSquareClick, selectedSquare, turn, boardWidth 
     );
 };
 
-export default CheckersBoard;
+export default memo(CheckersBoard);

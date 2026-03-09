@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { Chess } from 'chess.js';
 import { getBestMove } from '../../ai/chessBot/engine';
 import { recordGameResult } from '../../utils/storage';
@@ -13,10 +13,11 @@ export const useChessGame = (soundEnabled) => {
     const [gameOverTitle, setGameOverTitle] = useState('');
     const [moveHistory, setMoveHistory] = useState([]);
     const [moveFrom, setMoveFrom] = useState('');
+    const gameRecorded = useRef(false);
 
     // Check Game Over
     useEffect(() => {
-        if (game.isGameOver()) {
+        if (game.isGameOver() && !gameRecorded.current) {
             let title = 'Match Concluded';
             let msg = '';
             let winner = 'chess';
@@ -46,8 +47,9 @@ export const useChessGame = (soundEnabled) => {
             setGameOverTitle(title);
             setGameOverMsg(msg);
             recordGameResult(winner, 'chess');
+            gameRecorded.current = true;
         }
-    }, [game.fen(), gameMode]);
+    }, [game, gameMode]);
 
     // Make a move
     const makeAMove = useCallback((move) => {
@@ -138,6 +140,7 @@ export const useChessGame = (soundEnabled) => {
         setMoveHistory([]);
         setMoveFrom('');
         setBotIsThinking(false);
+        gameRecorded.current = false;
     };
 
     const undoMove = () => {
@@ -154,6 +157,7 @@ export const useChessGame = (soundEnabled) => {
         }
         setGameOverMsg('');
         setGameOverTitle('');
+        gameRecorded.current = false;
     };
 
     return {

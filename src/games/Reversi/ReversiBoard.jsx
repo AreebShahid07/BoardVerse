@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { P1, P2 } from './engine';
 import './ReversiBoard.css';
 
@@ -53,4 +53,4 @@ const ReversiBoard = ({ board, onSquareClick, validMoves, boardWidth }) => {
     );
 };
 
-export default ReversiBoard;
+export default memo(ReversiBoard);

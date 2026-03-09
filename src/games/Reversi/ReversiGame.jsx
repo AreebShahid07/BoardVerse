@@ -35,10 +35,13 @@ const ReversiGame = () => {
     }, []);
 
     // Convert history array to pairs for the UI
-    const historyPairs = [];
-    for (let i = 0; i < moveHistory.length; i += 2) {
-        historyPairs.push([moveHistory[i], moveHistory[i + 1]]);
-    }
+    const historyPairs = React.useMemo(() => {
+        const pairs = [];
+        for (let i = 0; i < moveHistory.length; i += 2) {
+            pairs.push([moveHistory[i], moveHistory[i + 1]]);
+        }
+        return pairs;
+    }, [moveHistory]);
 
     const leftPanel = (
         <RetroPanel title="Notation & Score" woodStyle="parchment" padding="small" className={styles.historyPanel}>

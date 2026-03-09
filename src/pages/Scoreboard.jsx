@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import CountUp from 'react-countup';
 import { getStats, resetStats } from '../utils/storage';
 import RetroPanel from '../components/RetroPanel';
 import Button from '../components/Button';
@@ -45,7 +44,7 @@ const Scoreboard = () => {
                     <div className={styles['stat-card-mini']}>
                         <span className={styles['stat-label']}>Matches</span>
                         <span className={styles['stat-value']}>
-                            <CountUp start={0} end={gameStats.matches || 0} duration={2} useEasing={true} />
+                            {gameStats.matches || 0}
                         </span>
                     </div>
                     <div className={styles['stat-card-mini']}>
@@ -57,19 +56,19 @@ const Scoreboard = () => {
                 <div className={styles['stat-card']}>
                     <span className={styles['stat-label']}>Human Wins</span>
                     <span className={styles['stat-value']}>
-                        <CountUp start={0} end={gameStats.playerWins || 0} duration={2} useEasing={true} />
+                        {gameStats.playerWins || 0}
                     </span>
                 </div>
                 <div className={styles['stat-card']}>
                     <span className={styles['stat-label']}>Automaton Wins</span>
                     <span className={styles['stat-value']}>
-                        <CountUp start={0} end={gameStats.botWins || 0} duration={2} useEasing={true} />
+                        {gameStats.botWins || 0}
                     </span>
                 </div>
                 <div className={styles['stat-card']}>
                     <span className={styles['stat-label']}>Stalemates/Draws</span>
                     <span className={styles['stat-value']}>
-                        <CountUp start={0} end={gameStats.draws || 0} duration={2} useEasing={true} />
+                        {gameStats.draws || 0}
                     </span>
                 </div>
             </motion.div>
@@ -92,13 +91,13 @@ const Scoreboard = () => {
                             <div className={styles['stat-card']}>
                                 <span className={styles['stat-label']}>Total Matches Played</span>
                                 <span className={styles['stat-value']}>
-                                    <CountUp start={0} end={stats.totalGames} duration={2.5} useEasing={true} />
+                                    {stats.totalGames}
                                 </span>
                             </div>
                             <div className={styles['stat-card']}>
                                 <span className={styles['stat-label']}>Total Strategic Draws</span>
                                 <span className={styles['stat-value']}>
-                                    <CountUp start={0} end={stats.totalDraws || 0} duration={2.5} useEasing={true} />
+                                    {stats.totalDraws || 0}
                                 </span>
                             </div>
                         </div>

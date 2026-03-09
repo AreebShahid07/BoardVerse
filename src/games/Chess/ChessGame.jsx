@@ -34,10 +34,13 @@ const ChessGame = () => {
     }, []);
 
     // Turn History array into pairs for notation rendering
-    const historyPairs = [];
-    for (let i = 0; i < moveHistory.length; i += 2) {
-        historyPairs.push([moveHistory[i], moveHistory[i + 1]]);
-    }
+    const historyPairs = React.useMemo(() => {
+        const pairs = [];
+        for (let i = 0; i < moveHistory.length; i += 2) {
+            pairs.push([moveHistory[i], moveHistory[i + 1]]);
+        }
+        return pairs;
+    }, [moveHistory]);
 
     const customBoardStyle = {
         borderRadius: '4px',
@@ -53,21 +56,24 @@ const ChessGame = () => {
     }, [game.fen(), moveFrom]);
 
     // Build customSquareStyles for highlighting
-    const currentSquareStyles = {};
-    if (moveFrom) {
-        currentSquareStyles[moveFrom] = {
-            backgroundColor: 'rgba(212, 180, 131, 0.45)',
-            boxShadow: 'inset 0 0 10px rgba(0,0,0,0.5)'
-        };
-        possibleMoves.forEach(sq => {
-            currentSquareStyles[sq] = {
-                background: game.get(sq) && game.get(sq).color !== game.turn()
-                    ? 'radial-gradient(circle, rgba(0,0,0,.2) 85%, transparent 85%)'
-                    : 'radial-gradient(circle, rgba(0,0,0,.2) 25%, transparent 25%)',
-                borderRadius: '50%'
+    const currentSquareStyles = React.useMemo(() => {
+        const styles = {};
+        if (moveFrom) {
+            styles[moveFrom] = {
+                backgroundColor: 'rgba(212, 180, 131, 0.45)',
+                boxShadow: 'inset 0 0 10px rgba(0,0,0,0.5)'
             };
-        });
-    }
+            possibleMoves.forEach(sq => {
+                styles[sq] = {
+                    background: game.get(sq) && game.get(sq).color !== game.turn()
+                        ? 'radial-gradient(circle, rgba(0,0,0,.2) 85%, transparent 85%)'
+                        : 'radial-gradient(circle, rgba(0,0,0,.2) 25%, transparent 25%)',
+                    borderRadius: '50%'
+                };
+            });
+        }
+        return styles;
+    }, [moveFrom, possibleMoves, game]);
 
     const leftPanel = (
         <RetroPanel title="Notation" woodStyle="parchment" padding="small" className={styles.historyPanel}>

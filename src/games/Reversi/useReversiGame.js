@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { Reversi, P1, P2 } from './engine';
 import { getBestReversiMove } from '../../ai/reversiBot/engine';
 import { recordGameResult } from '../../utils/storage';
@@ -13,6 +13,7 @@ export const useReversiGame = (soundEnabled) => {
     const [gameOverTitle, setGameOverTitle] = useState('');
     const [moveHistory, setMoveHistory] = useState([]);
     const [engineHistory, setEngineHistory] = useState([]);
+    const gameRecorded = useRef(false);
 
     const colNames = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     const getNotation = (r, c) => `${colNames[c]}${8 - r}`;
@@ -20,7 +21,7 @@ export const useReversiGame = (soundEnabled) => {
     // Game Over Check
     useEffect(() => {
         const status = engine.isGameOver();
-        if (status.over) {
+        if (status.over && !gameRecorded.current) {
             let title = 'Match Concluded';
             let msg = '';
             let winner = 'reversi';
@@ -42,6 +43,7 @@ export const useReversiGame = (soundEnabled) => {
             setGameOverTitle(title);
             setGameOverMsg(msg);
             recordGameResult(winner, 'reversi');
+            gameRecorded.current = true;
         }
     }, [engine.board, gameMode]);
 
@@ -107,6 +109,7 @@ export const useReversiGame = (soundEnabled) => {
         setMoveHistory([]);
         setEngineHistory([]);
         setBotIsThinking(false);
+        gameRecorded.current = false;
     };
 
     const undoMove = () => {
@@ -126,6 +129,7 @@ export const useReversiGame = (soundEnabled) => {
         setEngineHistory(newHistory);
         setGameOverMsg('');
         setGameOverTitle('');
+        gameRecorded.current = false;
     };
 
     const validMoves = engine.getAllValidMovesForPlayer(engine.currentTurn);

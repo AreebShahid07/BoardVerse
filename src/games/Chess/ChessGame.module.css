@@ -127,9 +127,26 @@
 }
 
 /* Responsive */
-@media (max-width: 1100px) {
+@media (max-width: 1250px) {
     .modeSelector {
         flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .historyPanel {
+        min-height: 200px;
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 600px) {
+    .historyRow {
+        font-size: 1rem;
+    }
+
+    .boardWrapperRetro {
+        padding: 10px;
+        border-width: 6px;
     }
 }
 

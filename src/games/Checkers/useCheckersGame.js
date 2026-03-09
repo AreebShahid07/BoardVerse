@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { Checkers, P1, P2, P1_KING, EMPTY } from './engine';
 import { getBestCheckersMove } from '../../ai/checkersBot/engine';
 import { recordGameResult } from '../../utils/storage';
@@ -16,13 +16,14 @@ export const useCheckersGame = (soundEnabled) => {
     const [selectedSquare, setSelectedSquare] = useState(null);
     const [validJumpsFromSelected, setValidJumpsFromSelected] = useState(null);
     const [engineHistory, setEngineHistory] = useState([]);
+    const gameRecorded = useRef(false);
 
     const colNames = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     const getNotation = (r, c) => `${colNames[c]}${8 - r}`;
 
     useEffect(() => {
         const status = engine.isGameOver();
-        if (status.over) {
+        if (status.over && !gameRecorded.current) {
             let title = 'Match Concluded';
             let msg = '';
             let winner = 'checkers';
@@ -44,6 +45,7 @@ export const useCheckersGame = (soundEnabled) => {
             setGameOverTitle(title);
             setGameOverMsg(msg);
             recordGameResult(winner, 'checkers');
+            gameRecorded.current = true;
         }
     }, [engine.board, gameMode]);
 
@@ -145,6 +147,7 @@ export const useCheckersGame = (soundEnabled) => {
         setSelectedSquare(null);
         setValidJumpsFromSelected(null);
         setBotIsThinking(false);
+        gameRecorded.current = false;
     };
 
     const undoMove = () => {
@@ -166,6 +169,7 @@ export const useCheckersGame = (soundEnabled) => {
         setGameOverTitle('');
         setSelectedSquare(null);
         setValidJumpsFromSelected(null);
+        gameRecorded.current = false;
     };
 
     return {

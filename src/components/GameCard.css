@@ -84,3 +84,18 @@
     font-size: 1.1rem;
     opacity: 0.7;
 }
+
+@media (max-width: 600px) {
+    .game-card-title {
+        font-size: 1.6rem;
+    }
+
+    .game-card-icon {
+        font-size: 4rem;
+    }
+
+    .game-card-description {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+}
